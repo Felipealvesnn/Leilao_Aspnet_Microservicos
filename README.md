@@ -52,20 +52,21 @@ Certifique-se de ter os seguintes softwares instalados no seu ambiente de desenv
 
 ```plaintext
 Leilao_Aspnet_Microservicos/
-├── Backend/
-│   ├── Services/
+├── Src/
+│   ├────
 │   │   ├── AuctionService/
 │   │   ├── UserService/
 │   │   ├── NotificationService/
-│   ├── IdentityServer/
-│   ├── Shared/
-│   │   ├── Events/
-│   │   ├── Utils/
+│   │   ├── IdentityServer/
+│
 ├── Frontend/
 │   ├── ClientApp/ (Next.js)
+│
 ├── Tests/
 │   ├── UnitTests/
 │   ├── IntegrationTests/
+│
 ├── Deployments/
 │   ├── Docker/
 │   ├── Kubernetes/
+
