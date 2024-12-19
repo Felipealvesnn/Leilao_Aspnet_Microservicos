@@ -15,11 +15,12 @@ public class AuctionRepository(AuctionDbContext context, IMapper mapper) : IAuct
 
     public async Task<AuctionDto?> GetAuctionByIdAsync(Guid id)
     {
-        return await context.Auctions
+        var autionc = await context.Auctions
             .ProjectTo<AuctionDto>(mapper.ConfigurationProvider)
             .FirstOrDefaultAsync(x => x.Id == id);
+        return autionc;
     }
-
+   
     public async Task<Auction?> GetAuctionEntityById(Guid id)
     {
         return await context.Auctions

@@ -35,11 +35,15 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
+    <None Include="DTOs\CreateAuctionDto.cs" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="DTOs\CreateAuctionDto.cs" />
+    <ProjectReference Include="..\Contracts\Contracts.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Consumers\" />
   </ItemGroup>
 
 </Project>
