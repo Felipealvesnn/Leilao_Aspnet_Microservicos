@@ -21,40 +21,9 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddMassTransit(x =>
-{
-    x.AddEntityFrameworkOutbox<AuctionDbContext>(o =>
-    {
-        o.QueryDelay = TimeSpan.FromSeconds(10);
+builder.Services.AddCustomServices(builder.Configuration);
 
-        o.UsePostgres();
-        o.UseBusOutbox();
-    });
-    // aqui ele adiciona todos os consumers q estiverem nesse mesmo namespace
-    x.AddConsumersFromNamespaceContaining<AuctionCreatedFaultConsumer>();
-   
-    x.SetEndpointNameFormatter(new KebabCaseEndpointNameFormatter("auction", false));
 
-    x.UsingRabbitMq((context, cfg) =>
-    {
-        cfg.Host(builder.Configuration["RabbitMq:Host"], "/", h =>
-        {
-            h.Username(builder.Configuration.GetValue("RabbitMQ:Username", "guest")!);
-            h.Password(builder.Configuration.GetValue("RabbitMQ:Password", "guest")!);
-        });
-
-        cfg.ConfigureEndpoints(context);
-    });
-});
-
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-    .AddJwtBearer(options =>
-    {
-        options.Authority = builder.Configuration["IdentityServiceUrl"];
-        options.RequireHttpsMetadata = false;
-        options.TokenValidationParameters.ValidateAudience = false;
-        options.TokenValidationParameters.NameClaimType = "username";
-    });
 builder.Services.AddScoped<IAuctionRepository, AuctionRepository>();
 
 var app = builder.Build();
