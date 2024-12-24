@@ -2,7 +2,7 @@
 using MassTransit;
 
 namespace AuctionService;
-
+// esse consumer é pra tratar a fila de erros q tem no rabbimq
 public class AuctionCreatedFaultConsumer : IConsumer<Fault<AuctionCreated>>
 {
     public async Task Consume(ConsumeContext<Fault<AuctionCreated>> context)
