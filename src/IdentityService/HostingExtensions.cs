@@ -29,14 +29,14 @@ namespace IdentityService
                     options.Events.RaiseSuccessEvents = true;
 
                     // see https://docs.duendesoftware.com/identityserver/v6/fundamentals/resources/
-                    options.EmitStaticAudienceClaim = true;
+                   // options.EmitStaticAudienceClaim = true;
                 })
                 .AddInMemoryIdentityResources(Config.IdentityResources)
                 .AddInMemoryApiScopes(Config.ApiScopes)
                 .AddInMemoryClients(Config.Clients)
                 .AddAspNetIdentity<ApplicationUser>();
 
-            //builder.Services.AddAuthentication()
+              builder.Services.AddAuthentication();
             //    .AddGoogle(options =>
             //    {
             //        options.SignInScheme = IdentityServerConstants.ExternalCookieAuthenticationScheme;
