@@ -12,12 +12,14 @@ namespace IdentityService
     {
         public static void EnsureSeedData(WebApplication app)
         {
+            // nao se esqueça de criar o migrations de acordo com o banco q estiver usando
             using (var scope = app.Services.GetRequiredService<IServiceScopeFactory>().CreateScope())
             {
                 var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
                 context.Database.Migrate();
 
                 var userMgr = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+                if (userMgr.Users.Any()) return;
                 var alice = userMgr.FindByNameAsync("alice").Result;
                 if (alice == null)
                 {
