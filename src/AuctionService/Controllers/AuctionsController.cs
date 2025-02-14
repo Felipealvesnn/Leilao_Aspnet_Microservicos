@@ -20,7 +20,7 @@ public class AuctionsController(IAuctionRepository _repo, IMapper _mapper,
  
 
     [HttpGet]
-    public async Task<ActionResult<List<AuctionDto>>> GetAllAuctions(string date)
+    public async Task<ActionResult<List<AuctionDto>>> GetAllAuctions( string date)
     {
         return await _repo.GetAuctionsAsync(date);
     }
