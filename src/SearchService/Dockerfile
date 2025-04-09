@@ -17,15 +17,16 @@ COPY src/Contracts/Contracts.csproj src/Contracts/Contracts.csproj
 #COPY tests/SearchService.IntegrationTests/SearchService.IntegrationTests.csproj tests/SearchService.IntegrationTests/SearchService.IntegrationTests.csproj
 
 # Restore package deps
-RUN dotnet restore MicroservicosLeilao.sln
+RUN dotnet restore Carsties.sln
 
 # Copy the app folders over
-COPY src/IdentityService src/IdentityService
-WORKDIR /app/src/IdentityService
+COPY src/SearchService src/SearchService
+COPY src/Contracts src/Contracts
+WORKDIR /app/src/SearchService
 RUN dotnet publish -c Release -o /app/src/out
 
 # Build runtime image
 FROM mcr.microsoft.com/dotnet/aspnet:8.0
 WORKDIR /app
 COPY --from=build /app/src/out .
-ENTRYPOINT [ "dotnet", "IdentityService.dll" ]
+ENTRYPOINT [ "dotnet", "SearchService.dll" ]

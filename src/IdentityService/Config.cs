@@ -14,7 +14,8 @@ namespace IdentityService
         public static IEnumerable<ApiScope> ApiScopes =>
             new ApiScope[]
             {
-                new ApiScope("auctionApp", "Auction app full access")
+                new ApiScope("auctionApp",
+                    "Auction app full access")
             };
 
         public static IEnumerable<Client> Clients(IConfiguration config) =>
@@ -42,7 +43,7 @@ namespace IdentityService
                 AccessTokenLifetime = 3600*24*30,
                 AlwaysIncludeUserClaimsInIdToken = true
             }
-             
+
             };
     }
 }
