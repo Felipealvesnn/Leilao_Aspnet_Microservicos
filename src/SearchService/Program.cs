@@ -50,7 +50,11 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(options =>
+    {
+        options.SwaggerEndpoint("/swagger/v1/swagger.json", "Seacher API V1");
+        options.RoutePrefix = ""; // Deixa o Swagger na raiz, então abre automaticamente
+    });
 }
 
 app.UseHttpsRedirection();
