@@ -8,10 +8,12 @@ export default function Navbar() {
     bg-white p-5 items-center text-gray-800 shadow-md
     "
     >
-      <div className="flex items-center gap-2 text-3xl font-semibold
+      <div
+        className="flex items-center gap-2 text-3xl font-semibold
       text-red-500
-      ">
-        <AiOutlineCar size={34}/>
+      "
+      >
+        <AiOutlineCar size={34} />
         <div> Felipe Auctions</div>
       </div>
       <div>Seach</div>
