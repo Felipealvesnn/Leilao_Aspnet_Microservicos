@@ -20,8 +20,19 @@ public class AuctionSvcHttpClient(HttpClient httpClient, IConfiguration config)
         {
             url += $"?date={lastUpdated}";
         }
+        else {
+            url += $"?date=2024-01-18";
 
-        var items = await httpClient.GetFromJsonAsync<List<Item>>(url);
+
+        }
+        List<Item> items = null;
+        try
+        {
+             items = await httpClient.GetFromJsonAsync<List<Item>>(url);
+        }
+        catch (Exception e) {
+            Console.WriteLine(e.Message);
+        }
 
         return items ?? [];
     }
