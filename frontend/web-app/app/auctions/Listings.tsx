@@ -8,18 +8,23 @@ import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
 import Filters from "./Filters";
 import { useParamsStore } from "@/hooks/useParamsStore";
-//import { shallow } from "zustand/shallow";
+import { useShallow } from 'zustand/react/shallow';
 // ← aqui você importa a store
 
 export default function Listings() {
+
   const [auction, setAuctions] = React.useState<Auction[]>([]);
-  const params = useParamsStore(state => ({
+  const params = useParamsStore(useShallow(state => ({
     pageNumber: state.pageNumber,
     pageSize: state.pageSize,
-    pageCount: state.pageCount,
     searchTerm: state.searchTerm,
     setParams: state.setParams,
-  }));
+    pageCount: state.pageCount,
+    // orderBy: state.orderBy,
+    // filterBy: state.filterBy,
+    // seller: state.seller,
+    // winner: state.winner
+})));
 
   useEffect(() => {
     getData(params.pageNumber, params.pageSize).then((data) => {
