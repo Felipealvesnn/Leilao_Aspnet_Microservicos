@@ -14,12 +14,13 @@ import qs from "query-string";
 
 export default function Listings() {
   const [auction, setAuctions] = React.useState<Auction[]>([]);
+  const seache = useParamsStore((state) => state.setParams);
   const params = useParamsStore(
     useShallow((state) => ({
       pageNumber: state.pageNumber,
       pageSize: state.pageSize,
       searchTerm: state.searchTerm,
-      setParams: state.setParams,
+      //setParams: state.setParams,
       pageCount: state.pageCount,
       // orderBy: state.orderBy,
       // filterBy: state.filterBy,
@@ -30,7 +31,7 @@ export default function Listings() {
   const url = qs.stringifyUrl(
     {
       url: "",
-      query: { pageNumber: params.pageNumber, pageSize: params.pageSize },
+      query: params,
     },
     { skipNull: true }
   );
@@ -38,9 +39,9 @@ export default function Listings() {
   useEffect(() => {
     getData(url).then((data) => {
       setAuctions(data.results);
-      params.setParams({ pageCount: data.pageCount });
+      seache({ pageCount: data.pageCount });
     });
-  }, [params.pageNumber, params.pageSize]);
+  }, [url]);
 
   if (!auction || auction.length === 0) {
     return (
@@ -54,9 +55,7 @@ export default function Listings() {
 
   return (
     <>
-      <Filters
-       
-      />
+      <Filters />
       <div className="grid grid-cols-4 gap-6">
         {auction.map((item) => (
           <AuctionCard key={item.id} auction={item} />
@@ -66,7 +65,7 @@ export default function Listings() {
         <AppPagination
           currentPage={params.pageNumber}
           pageCount={params.pageCount}
-          pageChanged={(num) => params.setParams({ pageNumber: num })}
+          pageChanged={(num) => seache({ pageNumber: num })}
         />
       </div>
     </>
