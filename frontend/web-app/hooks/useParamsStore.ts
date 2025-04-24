@@ -1,3 +1,4 @@
+// stores/paramsStore.ts
 import { create } from "zustand";
 
 type State = {
@@ -5,6 +6,7 @@ type State = {
   pageSize: number;
   pageCount: number;
   searchTerm: string;
+
 };
 
 type Actions = {
@@ -14,20 +16,20 @@ type Actions = {
 
 const initialState: State = {
   pageNumber: 1,
-  pageSize: 10,
-  pageCount: 1,
+  pageSize: 4,
+  pageCount: 0,
   searchTerm: "",
 };
-export const useParamsStore = create<State & Actions>()((set) => ({
+
+export const useParamsStore = create<State & Actions>((set) => ({
   ...initialState,
+
   setParams: (newParams: Partial<State>) => {
-    set((state) => {
-      if (newParams.pageNumber) {
-        return { ...state, pageNumber: newParams.pageNumber };
-      } else {
-        return { ...state, ...newParams, pageNumber: 1 };
-      }
-    });
+    set((state) => ({
+      ...state,
+      ...newParams,
+      pageNumber: newParams.pageSize && newParams.pageSize !== state.pageSize ? 1 : (newParams.pageNumber ?? state.pageNumber),
+    }));
   },
 
   reset: () => set(initialState),

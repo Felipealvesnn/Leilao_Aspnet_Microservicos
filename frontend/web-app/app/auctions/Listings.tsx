@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import AuctionCard from "./AuctionCard";
 import AppPagination from "../components/AppPagination";
 import { getData } from "../actions/auctionsActions";
@@ -7,21 +7,26 @@ import { Auction } from "../types/auction";
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
 import Filters from "./Filters";
-//debugger;
+import { useParamsStore } from "@/hooks/useParamsStore";
+//import { shallow } from "zustand/shallow";
+// ← aqui você importa a store
 
 export default function Listings() {
   const [auction, setAuctions] = React.useState<Auction[]>([]);
-  const [pageCount, setPageCount] = React.useState(0);
-  const [PageNumber, setPageNumber] = React.useState(1);
-  const [pageSize, setPageSize] = React.useState(4);
+  const params = useParamsStore(state => ({
+    pageNumber: state.pageNumber,
+    pageSize: state.pageSize,
+    pageCount: state.pageCount,
+    searchTerm: state.searchTerm,
+    setParams: state.setParams,
+  }));
 
-
-  React.useEffect(() => {
-    getData(PageNumber, pageSize).then((data) => {
+  useEffect(() => {
+    getData(params.pageNumber, params.pageSize).then((data) => {
       setAuctions(data.results);
-      setPageCount(data.pageCount);
+      params.setParams({ pageCount: data.pageCount });
     });
-  }, [PageNumber, pageSize]);
+  }, [params.pageNumber, params.pageSize]);
 
   if (!auction || auction.length === 0) {
     return (
@@ -30,12 +35,15 @@ export default function Listings() {
           <Skeleton key={index} height={200} borderRadius={10} />
         ))}
       </div>
-    )
+    );
   }
 
   return (
     <>
-    <Filters pageSize={pageSize} setPageSize={setPageSize} />
+      <Filters
+        pageSize={params.pageSize}
+        setPageSize={(size) => params.setParams({ pageSize: size })}
+      />
       <div className="grid grid-cols-4 gap-6">
         {auction.map((item) => (
           <AuctionCard key={item.id} auction={item} />
@@ -43,9 +51,9 @@ export default function Listings() {
       </div>
       <div className="flex justify-center mt-4">
         <AppPagination
-          currentPage={PageNumber}
-          pageCount={pageCount}
-          pageChanged={setPageNumber}
+          currentPage={params.pageNumber}
+          pageCount={params.pageCount}
+          pageChanged={(num) => params.setParams({ pageNumber: num })}
         />
       </div>
     </>
