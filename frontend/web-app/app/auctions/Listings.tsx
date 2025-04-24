@@ -4,30 +4,39 @@ import AuctionCard from "./AuctionCard";
 import AppPagination from "../components/AppPagination";
 import { getData } from "../actions/auctionsActions";
 import { Auction } from "../types/auction";
-import Skeleton from 'react-loading-skeleton'
-import 'react-loading-skeleton/dist/skeleton.css'
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 import Filters from "./Filters";
 import { useParamsStore } from "@/hooks/useParamsStore";
-import { useShallow } from 'zustand/react/shallow';
+import { useShallow } from "zustand/react/shallow";
+import qs from "query-string";
 // ← aqui você importa a store
 
 export default function Listings() {
-
   const [auction, setAuctions] = React.useState<Auction[]>([]);
-  const params = useParamsStore(useShallow(state => ({
-    pageNumber: state.pageNumber,
-    pageSize: state.pageSize,
-    searchTerm: state.searchTerm,
-    setParams: state.setParams,
-    pageCount: state.pageCount,
-    // orderBy: state.orderBy,
-    // filterBy: state.filterBy,
-    // seller: state.seller,
-    // winner: state.winner
-})));
+  const params = useParamsStore(
+    useShallow((state) => ({
+      pageNumber: state.pageNumber,
+      pageSize: state.pageSize,
+      searchTerm: state.searchTerm,
+      setParams: state.setParams,
+      pageCount: state.pageCount,
+      // orderBy: state.orderBy,
+      // filterBy: state.filterBy,
+      // seller: state.seller,
+      // winner: state.winner
+    }))
+  );
+  const url = qs.stringifyUrl(
+    {
+      url: "",
+      query: { pageNumber: params.pageNumber, pageSize: params.pageSize },
+    },
+    { skipNull: true }
+  );
 
   useEffect(() => {
-    getData(params.pageNumber, params.pageSize).then((data) => {
+    getData(url).then((data) => {
       setAuctions(data.results);
       params.setParams({ pageCount: data.pageCount });
     });
@@ -46,8 +55,7 @@ export default function Listings() {
   return (
     <>
       <Filters
-        pageSize={params.pageSize}
-        setPageSize={(size) => params.setParams({ pageSize: size })}
+       
       />
       <div className="grid grid-cols-4 gap-6">
         {auction.map((item) => (
