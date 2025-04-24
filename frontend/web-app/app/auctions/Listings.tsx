@@ -21,7 +21,7 @@ export default function Listings() {
       pageSize: state.pageSize,
       searchTerm: state.searchTerm,
       pageCount: state.pageCount,
-      // orderBy: state.orderBy,
+       orderBy: state.orderBy,
       // filterBy: state.filterBy,
       // seller: state.seller,
       // winner: state.winner

@@ -12,6 +12,12 @@ export default function Search() {
       setParams: state.setParams,
     }))
   );
+  const searchTermc = useParamsStore(
+    useShallow((state) => ({
+      searchValue: state.searchValue,
+      setSearchValue: state.setSearchValue,
+    }))
+  );
 
   return (
     <div
@@ -22,11 +28,11 @@ export default function Search() {
       <input
         onKeyDown={(e) => {
           if (e.key === "Enter") {
-            params.setParams({ searchTerm: params.searchTerm });
+            params.setParams({ searchTerm: searchTermc.searchValue });
           }
         }}
-        value={params.searchTerm}
-        onChange={(e) => params.setParams({ searchTerm: e.target.value })}
+        value={searchTermc.searchValue}
+        onChange={(e) => searchTermc.setSearchValue(e.target.value)}
         type="text"
         className="flex-grow pl-5 bg-transparent
         focus:outline-none
@@ -38,7 +44,7 @@ export default function Search() {
         placeholder="Search"
       ></input>
       <button
-        onClick={() => params.setParams({ searchTerm: params.searchTerm })}
+        onClick={() => params.setParams({ searchTerm: searchTermc.searchValue })}
       >
         <FaSearch
           size={34}
