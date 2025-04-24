@@ -60,7 +60,7 @@ Leilao_Aspnet_Microservicos/
 │   │   ├── IdentityServer/
 │
 ├── Frontend/
-│   ├── ClientApp/ (Next.js)
+│   ├── web-app/ (Next.js)
 │
 ├── Tests/
 │   ├── UnitTests/

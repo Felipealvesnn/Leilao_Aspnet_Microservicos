@@ -20,7 +20,6 @@ export default function Listings() {
       pageNumber: state.pageNumber,
       pageSize: state.pageSize,
       searchTerm: state.searchTerm,
-      //setParams: state.setParams,
       pageCount: state.pageCount,
       // orderBy: state.orderBy,
       // filterBy: state.filterBy,
