@@ -6,9 +6,11 @@ type State = {
   pageSize: number;
   pageCount: number;
   searchTerm: string;
-  orderBy: string,
+  orderBy: string;
   searchValue: string;
-
+  filterBy: string;
+  seller?: string;
+  winner?: string;
 };
 
 type Actions = {
@@ -22,8 +24,11 @@ const initialState: State = {
   pageSize: 4,
   pageCount: 0,
   searchTerm: "",
-  orderBy: 'make',
+  orderBy: "make",
   searchValue: "",
+  filterBy: "live",
+  seller: undefined,
+  winner: undefined,
 };
 
 export const useParamsStore = create<State & Actions>((set) => ({
@@ -33,7 +38,10 @@ export const useParamsStore = create<State & Actions>((set) => ({
     set((state) => ({
       ...state,
       ...newParams,
-      pageNumber: newParams.pageSize && newParams.pageSize !== state.pageSize ? 1 : (newParams.pageNumber ?? state.pageNumber),
+      pageNumber:
+        newParams.pageSize && newParams.pageSize !== state.pageSize
+          ? 1
+          : newParams.pageNumber ?? state.pageNumber,
     }));
   },
   setSearchValue: (value: string) => {

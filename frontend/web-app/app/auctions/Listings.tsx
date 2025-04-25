@@ -21,10 +21,10 @@ export default function Listings() {
       pageSize: state.pageSize,
       searchTerm: state.searchTerm,
       pageCount: state.pageCount,
-       orderBy: state.orderBy,
-      // filterBy: state.filterBy,
-      // seller: state.seller,
-      // winner: state.winner
+      orderBy: state.orderBy,
+      filterBy: state.filterBy,
+      seller: state.seller,
+      winner: state.winner,
     }))
   );
   const url = qs.stringifyUrl(
@@ -44,11 +44,15 @@ export default function Listings() {
 
   if (!auction || auction.length === 0) {
     return (
-      <div className="grid grid-cols-4 gap-6">
-        {Array.from({ length: 8 }).map((_, index) => (
-          <Skeleton key={index} height={200} borderRadius={10} />
-        ))}
-      </div>
+      <>
+        <Filters />
+
+        <div className="grid grid-cols-4 gap-6">
+          {Array.from({ length: 8 }).map((_, index) => (
+            <Skeleton key={index} height={200} borderRadius={10} />
+          ))}
+        </div>
+      </>
     );
   }
 
