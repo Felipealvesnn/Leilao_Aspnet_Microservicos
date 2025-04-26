@@ -44,7 +44,9 @@ export default function Search() {
         placeholder="Search"
       ></input>
       <button
-        onClick={() => params.setParams({ searchTerm: searchTermc.searchValue })}
+        onClick={() =>
+          params.setParams({ searchTerm: searchTermc.searchValue })
+        }
       >
         <FaSearch
           size={34}

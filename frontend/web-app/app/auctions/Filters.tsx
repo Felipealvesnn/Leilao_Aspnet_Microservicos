@@ -1,12 +1,14 @@
 import { useParamsStore } from "@/hooks/useParamsStore";
-import { Button, ButtonGroup, Dropdown, DropdownItem } from "flowbite-react";
+import { Dropdown, DropdownItem } from "flowbite-react";
 import React from "react";
 import { AiOutlineClockCircle, AiOutlineSortAscending } from "react-icons/ai";
 import { BsFillStopCircleFill, BsStopwatchFill } from "react-icons/bs";
 import { GiFinishLine, GiFlame } from "react-icons/gi";
 import { useShallow } from "zustand/shallow";
+import { ButtonSelector } from "../components/ButtonSelector";
 
 const pageSizeButtons = [4, 8, 12];
+
 const orderButtons = [
   {
     label: "Alphabetical",
@@ -52,77 +54,77 @@ export default function Filters() {
       setParams: state.setParams,
     }))
   );
+
+  const selectedFilterLabel =
+    filterButtons.find((f) => f.value === params.filterBy)?.label ||
+    "Choose filter";
+
   return (
-    <div className="flex justify-between items-center mb-4">
-      <div className="flex  items-center">
+    <div className="flex flex-wrap gap-4 justify-between items-center mb-4">
+      {/* Filter by */}
+      <div className="flex items-center">
         <span className="uppercase text-sm text-gray-500 mb-1 mr-2">
           Filter by
         </span>
         <Dropdown
-          label={
-            filterButtons.find((f) => f.value === params.filterBy)?.label ||
-            "Choose filter"
-          }
+          label={selectedFilterLabel}
           dismissOnClick={true}
           className="!bg-gray-800 text-white rounded-md shadow"
           renderTrigger={() => (
             <button
-              className={`flex items-center px-4 py-2 rounded-md font-semibold ${
+              aria-label="Filter options"
+              className={`flex items-center px-4 py-2 rounded-md font-semibold transition-all duration-150 ease-in-out ${
                 params.filterBy
                   ? "bg-red-600 text-white"
                   : "bg-gray-700 text-white"
               }`}
             >
-              {filterButtons.find((f) => f.value === params.filterBy)?.label ||
-                "Choose filter"}
+              {selectedFilterLabel}
             </button>
           )}
         >
-          {filterButtons.map(({ label, icon: Icon, value }) => (
-            <DropdownItem
-              key={value}
-              onClick={() => params.setParams({ filterBy: value })}
-              className={`flex items-center gap-2 ${
-                params.filterBy === value
-                  ? "bg-red-100 text-red-600 font-semibold"
-                  : ""
-              }`}
-            >
-              <Icon className="h-4 w-4" />
-              {label}
-            </DropdownItem>
-          ))}
+          {filterButtons.map(({ label, icon: Icon, value }) => {
+            const isSelected = params.filterBy === value;
+            return (
+              <DropdownItem
+                key={value}
+                onClick={() => params.setParams({ filterBy: value })}
+                className={`flex items-center gap-2 px-4 py-2 rounded-md font-semibold transition-all duration-150 ease-in-out
+                  ${isSelected
+                    ? "bg-white text-gray-900"
+                    : "bg-gray-800 text-white hover:bg-gray-700 hover:text-white"}
+                `}
+              >
+                <Icon className="h-4 w-4" />
+                {label}
+              </DropdownItem>
+            );
+          })}
         </Dropdown>
       </div>
-      <div>
-        <span className="uppercase text-sm text-gray-500 mr-2">Order by</span>
-        <ButtonGroup>
-          {orderButtons.map(({ label, icon: Icon, value }) => (
-            <Button
-              key={value}
-              onClick={() => params.setParams({ orderBy: value })}
-              color={`${params.orderBy === value ? "red" : "gray"}`}
-            >
-              <Icon className="mr-3 h-4 w-4" />
-              {label}
-            </Button>
-          ))}
-        </ButtonGroup>
+
+      {/* Order by usando ButtonSelector */}
+      <div className="flex items-center">
+        <span className="uppercase text-sm text-gray-500 mr-2">
+          Order by
+        </span>
+        <ButtonSelector
+          options={orderButtons}
+          selected={params.orderBy}
+          onSelect={(value: string) => params.setParams({ orderBy: value })}
+        />
       </div>
-      <div>
-        <span className="uppercase text-sm text-gray-500 mr-2">Page size</span>
-        <ButtonGroup>
-          {pageSizeButtons.map((value, i) => (
-            <Button
-              key={i}
-              onClick={() => params.setParams({ pageSize: value })}
-              color={`${params.pageSize === value ? "red" : "gray"}`}
-              className="focus:ring-0"
-            >
-              {value}
-            </Button>
-          ))}
-        </ButtonGroup>
+
+      {/* Page size usando ButtonSelector */}
+      <div className="flex items-center">
+        <span className="uppercase text-sm text-gray-500 mr-2">
+          Page size
+        </span>
+        <ButtonSelector
+          options={pageSizeButtons.map((v) => ({ label: String(v), value: v }))}
+          selected={params.pageSize}
+          onSelect={(value: number) => params.setParams({ pageSize: value })}
+        />
       </div>
     </div>
   );
