@@ -10,6 +10,7 @@ import Filters from "./Filters";
 import { useParamsStore } from "@/hooks/useParamsStore";
 import { useShallow } from "zustand/react/shallow";
 import qs from "query-string";
+import EmptyFilter from "../components/EmptyFilter";
 // ← aqui você importa a store
 
 export default function Listings() {
@@ -46,7 +47,7 @@ export default function Listings() {
     return (
       <>
         <Filters />
-
+        <EmptyFilter  showReset  />
         <div className="grid grid-cols-4 gap-6">
           {Array.from({ length: 8 }).map((_, index) => (
             <Skeleton key={index} height={200} borderRadius={10} />
