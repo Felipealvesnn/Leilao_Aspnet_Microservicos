@@ -1,0 +1,4 @@
+AUTH_SECRET="NTp4fSosA7SrFI9ArtIKZAIzfWqRP7NPTlDvUGqIFWg=" # Added by `npx auth`. Read more: https://cli.authjs.dev
+
+ID_URL_INTERNAL="http://localhost:5000"
+ID_URL="http://localhost:5000"
