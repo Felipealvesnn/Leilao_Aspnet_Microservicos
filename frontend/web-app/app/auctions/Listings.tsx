@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import AuctionCard from "./AuctionCard";
 import AppPagination from "../components/AppPagination";
 import { getData } from "../actions/auctionsActions";
@@ -14,6 +14,7 @@ import EmptyFilter from "../components/EmptyFilter";
 // ← aqui você importa a store
 
 export default function Listings() {
+  const [loading, setLoading] = useState(true);
   const [auction, setAuctions] = React.useState<Auction[]>([]);
   const seache = useParamsStore((state) => state.setParams);
   const params = useParamsStore(
@@ -41,19 +42,24 @@ export default function Listings() {
       debugger;
       setAuctions(data.results);
       seache({ pageCount: data.pageCount });
+      setLoading(false);
     });
   }, [url]);
+
+  if (loading)
+    return (
+      <div className="grid grid-cols-4 gap-6">
+        {Array.from({ length: 8 }).map((_, index) => (
+          <Skeleton key={index} height={200} borderRadius={10} />
+        ))}
+      </div>
+    );
 
   if (!auction || auction.length === 0) {
     return (
       <>
         <Filters />
         <EmptyFilter showReset />
-        <div className="grid grid-cols-4 gap-6">
-          {Array.from({ length: 8 }).map((_, index) => (
-            <Skeleton key={index} height={200} borderRadius={10} />
-          ))}
-        </div>
       </>
     );
   }
