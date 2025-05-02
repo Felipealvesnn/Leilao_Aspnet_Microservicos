@@ -1,4 +1,3 @@
-import { console } from "inspector";
 import NextAuth, { Profile } from "next-auth";
 import { OIDCConfig } from "next-auth/providers";
 import DuendeIDS6Provider from "next-auth/providers/duende-identity-server6";
