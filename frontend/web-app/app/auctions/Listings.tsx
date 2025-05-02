@@ -38,6 +38,7 @@ export default function Listings() {
 
   useEffect(() => {
     getData(url).then((data) => {
+      debugger;
       setAuctions(data.results);
       seache({ pageCount: data.pageCount });
     });
@@ -47,7 +48,7 @@ export default function Listings() {
     return (
       <>
         <Filters />
-        <EmptyFilter  showReset  />
+        <EmptyFilter showReset />
         <div className="grid grid-cols-4 gap-6">
           {Array.from({ length: 8 }).map((_, index) => (
             <Skeleton key={index} height={200} borderRadius={10} />

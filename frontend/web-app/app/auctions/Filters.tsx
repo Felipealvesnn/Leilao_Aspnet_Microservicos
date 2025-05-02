@@ -84,16 +84,12 @@ export default function Filters() {
           )}
         >
           {filterButtons.map(({ label, icon: Icon, value }) => {
-            const isSelected = params.filterBy === value;
+            // const isSelected = params.filterBy === value;
             return (
               <DropdownItem
                 key={value}
                 onClick={() => params.setParams({ filterBy: value })}
-                className={`flex items-center gap-2 px-4 py-2 rounded-md font-semibold transition-all duration-150 ease-in-out
-                  ${isSelected
-                    ? "bg-white text-gray-900"
-                    : "bg-gray-800 text-white hover:bg-gray-700 hover:text-white"}
-                `}
+                
               >
                 <Icon className="h-4 w-4" />
                 {label}

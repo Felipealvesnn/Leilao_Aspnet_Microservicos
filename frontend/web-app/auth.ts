@@ -1,10 +1,23 @@
+import { console } from "inspector";
 import NextAuth, { Profile } from "next-auth";
 import { OIDCConfig } from "next-auth/providers";
 import DuendeIDS6Provider from "next-auth/providers/duende-identity-server6";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
+  debug: true,
   session: {
     strategy: "jwt",
+  },
+  logger: {
+    error(code, ...message) {
+      console.log(code)
+    },
+    warn(code, ...message) {
+      console.log(code, message)
+    },
+    debug(code, ...message) {
+      console.log(code, message)
+    },
   },
   providers: [
     DuendeIDS6Provider({
@@ -27,14 +40,15 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     } as OIDCConfig<Omit<Profile, "username">>),
   ],
   callbacks: {
-        // async redirect({ url, baseUrl }) {
-        //   return url.startsWith(baseUrl) ? url : baseUrl;
-        // },
+    async redirect({ url, baseUrl }) {
+      return url.startsWith(baseUrl) ? url : baseUrl;
+    },
     async authorized({ auth }) {
-      debugger;
+      //debugger;
       return !!auth;
     },
     async jwt({ token, profile, account }) {
+      console.log( token, profile, account);
       if (account && account.access_token) {
         token.accessToken = account.access_token;
       }
@@ -45,8 +59,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     },
     async session({ session, token }) {
       if (token) {
-        // session.user.username = token.username;
-        // session.accessToken = token.accessToken;
+        session.user.username = token.username;
+        session.accessToken = token.accessToken;
       }
       return session;
     },
