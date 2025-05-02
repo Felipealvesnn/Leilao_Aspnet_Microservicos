@@ -42,7 +42,7 @@ export default function UserActions({user}: Props) {
           Sell my car
         </Link>
       </DropdownItem>
-      <DropdownItem icon={HiCog}>
+      <DropdownItem  icon={HiCog}>
         <Link href='/session'>
           Session (dev only!)
         </Link>

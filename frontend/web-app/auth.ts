@@ -7,6 +7,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   session: {
     strategy: "jwt",
   },
+  
   logger: {
     error(code, ...message) {
       console.log(code)
