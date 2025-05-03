@@ -13,3 +13,20 @@ export async function getData(query: string): Promise<PagedResult<Auction>> {
 
   return res.json();
 }
+
+export async function updateAuctionTest() {
+  const data = {
+    // dados aqui
+  };
+
+  const res = await fetch('http://localhost:7001/auctions', {
+    method: 'PUT',
+    headers: {},
+    body: JSON.stringify(data),
+  });
+
+  if (!res.ok) return { status: res.status, message: res.statusText };
+
+  return res.json();
+}
+
