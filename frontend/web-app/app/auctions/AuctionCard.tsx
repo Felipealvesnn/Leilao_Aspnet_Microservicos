@@ -2,6 +2,7 @@ import React from "react";
 import { Auction } from "../types/auction";
 import Countdowntime from "./Countdowntime";
 import CarImage from "./CarImage";
+import Link from "next/link";
 
 type Props = {
   auction: Auction;
@@ -9,7 +10,7 @@ type Props = {
 
 export default function AuctionCard({ auction }: Props) {
   return (
-    <a href="#">
+    <Link href={`/auctions/details/${auction.id}`}>
       <div className="relative w-full bg-gray-200 aspect-[16/10] rounded-lg overflow-hidden">
         <CarImage auction={auction} />
 
@@ -23,6 +24,6 @@ export default function AuctionCard({ auction }: Props) {
         </h3>
         <p className="font-semibold text-sm"> ANO: {auction.year}</p>
       </div>
-    </a>
+    </Link>
   );
 }
