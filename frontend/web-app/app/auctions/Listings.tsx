@@ -16,7 +16,9 @@ import EmptyFilter from "../components/EmptyFilter";
 export default function Listings() {
   const [loading, setLoading] = useState(true);
   const [auction, setAuctions] = React.useState<Auction[]>([]);
-  const seache = useParamsStore((state) => state.setParams);
+  const seache = useParamsStore((state) => {
+    return state.setParams;
+  });
   const params = useParamsStore(
     useShallow((state) => ({
       pageNumber: state.pageNumber,
