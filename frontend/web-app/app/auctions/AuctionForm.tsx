@@ -2,11 +2,10 @@ import React from "react";
 import { useForm } from "react-hook-form";
 
 export default function AuctionForm() {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
+
+    const { control, handleSubmit, setFocus,register, reset, formState: { isSubmitting, isValid, errors } } = useForm({
+        mode: 'onTouched'
+    });
 
   return (
     <form onSubmit={handleSubmit((data) => console.log(data))}>
