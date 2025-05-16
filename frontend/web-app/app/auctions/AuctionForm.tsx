@@ -4,17 +4,22 @@ import React from "react";
 import { FieldValues, useForm } from "react-hook-form";
 import DateInput from "../components/DateInput";
 import Input from "../components/Input";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import { Auction } from "../types/auction";
 
-export default function AuctionForm() {
+type Props = {
+  auction?: Auction;
+};
+
+export default function AuctionForm({ auction }: Props) {
+  const router = useRouter();
   const pathname = usePathname();
   const {
     control,
     handleSubmit,
     setFocus,
-    register,
     reset,
-    formState: { isSubmitting, isValid, errors },
+    formState: { isSubmitting, isValid },
   } = useForm({
     mode: "onTouched",
   });
