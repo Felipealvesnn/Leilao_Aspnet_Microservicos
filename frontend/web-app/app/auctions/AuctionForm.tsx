@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
+'use client';
 import { Button } from "flowbite-react";
 import React from "react";
 import { FieldValues, useForm } from "react-hook-form";
