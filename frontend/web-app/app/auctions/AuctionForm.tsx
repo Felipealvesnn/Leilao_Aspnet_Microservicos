@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-'use client';
+"use client";
 import { Button } from "flowbite-react";
-import React from "react";
+import React, { useEffect } from "react";
 import { FieldValues, useForm } from "react-hook-form";
 import DateInput from "../components/DateInput";
 import Input from "../components/Input";
@@ -24,6 +24,14 @@ export default function AuctionForm({ auction }: Props) {
   } = useForm({
     mode: "onTouched",
   });
+
+  useEffect(() => {
+    if (auction) {
+      const { make, model, color, mileage, year } = auction;
+      reset({ make, model, color, mileage, year });
+    }
+    setFocus("make");
+  }, [setFocus, auction, reset]);
 
   async function onSubmit(data: FieldValues) {
     // try {
