@@ -2,6 +2,10 @@
 @plugin "flowbite-react/plugin/tailwindcss";
 @source "../.flowbite-react/class-list.json";
 
+.react-datepicker-wrapper {
+    width: 100%;
+}
+
 /* :root {
   --background: #ffffff;
   --foreground: #171717;
