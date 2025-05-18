@@ -41,7 +41,7 @@ export default function Listings() {
 
   useEffect(() => {
     getData(url).then((data) => {
-      debugger;
+      //  debugger;
       setAuctions(data.results);
       seache({ pageCount: data.pageCount });
       setLoading(false);

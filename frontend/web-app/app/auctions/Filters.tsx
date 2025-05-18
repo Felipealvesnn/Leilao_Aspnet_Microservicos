@@ -67,20 +67,11 @@ export default function Filters() {
           Filter by
         </span>
         <Dropdown
+          inline
           label={selectedFilterLabel}
           dismissOnClick={true}
-          className="!bg-gray-800 text-white rounded-md shadow"
           renderTrigger={() => (
-            <button
-              aria-label="Filter options"
-              className={`flex items-center px-4 py-2 rounded-md font-semibold transition-all duration-150 ease-in-out ${
-                params.filterBy
-                  ? "bg-red-600 text-white"
-                  : "bg-gray-700 text-white"
-              }`}
-            >
-              {selectedFilterLabel}
-            </button>
+            <button aria-label="Filter options">{selectedFilterLabel}</button>
           )}
         >
           {filterButtons.map(({ label, icon: Icon, value }) => {
@@ -89,7 +80,6 @@ export default function Filters() {
               <DropdownItem
                 key={value}
                 onClick={() => params.setParams({ filterBy: value })}
-                
               >
                 <Icon className="h-4 w-4" />
                 {label}
@@ -101,9 +91,7 @@ export default function Filters() {
 
       {/* Order by usando ButtonSelector */}
       <div className="flex items-center">
-        <span className="uppercase text-sm text-gray-500 mr-2">
-          Order by
-        </span>
+        <span className="uppercase text-sm text-gray-500 mr-2">Order by</span>
         <ButtonSelector
           options={orderButtons}
           selected={params.orderBy}
@@ -113,9 +101,7 @@ export default function Filters() {
 
       {/* Page size usando ButtonSelector */}
       <div className="flex items-center">
-        <span className="uppercase text-sm text-gray-500 mr-2">
-          Page size
-        </span>
+        <span className="uppercase text-sm text-gray-500 mr-2">Page size</span>
         <ButtonSelector
           options={pageSizeButtons.map((v) => ({ label: String(v), value: v }))}
           selected={params.pageSize}
