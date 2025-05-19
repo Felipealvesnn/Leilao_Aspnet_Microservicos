@@ -4,6 +4,8 @@
  import { auth } from '@/auth';
 
 const baseUrl = process.env.SEARCH_URL_INTERNAL;
+const baseUrlpostPut = process.env.AUC_URL_INTERNAL;
+
 
  async function get(url: string) {
     debugger;
@@ -23,7 +25,7 @@ async function post(url: string, body: {}) {
         body: JSON.stringify(body)
     }
 
-    const response = await fetch(baseUrl + url, requestOptions);
+    const response = await fetch(baseUrlpostPut + url, requestOptions);
 
     return handleResponse(response);
 }
@@ -34,7 +36,7 @@ async function put(url: string, body: {}) {
         body: JSON.stringify(body)
     }
 
-    const response = await fetch(baseUrl + url, requestOptions);
+    const response = await fetch(baseUrlpostPut + url, requestOptions);
 
     return handleResponse(response);
 }
@@ -45,7 +47,7 @@ async function del(url: string) {
         headers: await getHeaders()
     }
 
-    const response = await fetch(baseUrl + url, requestOptions);
+    const response = await fetch(baseUrlpostPut + url, requestOptions);
 
     return handleResponse(response);
 }
