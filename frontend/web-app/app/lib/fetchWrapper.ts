@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-empty-object-type */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
  import { auth } from '@/auth';
@@ -8,6 +9,39 @@ const baseUrl = process.env.SEARCH_URL_INTERNAL;
     debugger;
     const requestOptions = {
         method: 'GET',
+        headers: await getHeaders()
+    }
+
+    const response = await fetch(baseUrl + url, requestOptions);
+
+    return handleResponse(response);
+}
+async function post(url: string, body: {}) {
+    const requestOptions = {
+        method: 'POST',
+        headers: await getHeaders(),
+        body: JSON.stringify(body)
+    }
+
+    const response = await fetch(baseUrl + url, requestOptions);
+
+    return handleResponse(response);
+}
+async function put(url: string, body: {}) {
+    const requestOptions = {
+        method: 'PUT',
+        headers: await getHeaders(),
+        body: JSON.stringify(body)
+    }
+
+    const response = await fetch(baseUrl + url, requestOptions);
+
+    return handleResponse(response);
+}
+
+async function del(url: string) {
+    const requestOptions = {
+        method: 'DELETE',
         headers: await getHeaders()
     }
 
@@ -49,5 +83,5 @@ async function handleResponse(response: Response) {
 }
 
 export const fetchWrapper = {
-    get,
+    get, post , put, del
 };
