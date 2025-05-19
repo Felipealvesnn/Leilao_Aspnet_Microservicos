@@ -1,19 +1,13 @@
 "use server";
-import { env } from "process";
+// import { env } from "process";
 import { auth } from "@/auth";
 import { PagedResult } from "../types";
 import { Auction } from "../types/auction";
+import { fetchWrapper } from "../lib/fetchWrapper";
 
 export async function getData(query: string): Promise<PagedResult<Auction>> {
   //const res = await fetch("http://localhost:7001/api/auctions?date=2024-12-18");
-
-  const res = await fetch(`${env.SEARCH_URL_INTERNAL}/api/search${query}`);
-
-  if (!res.ok) {
-    throw new Error("Failed to fetch data");
-  }
-
-  return res.json();
+  return await fetchWrapper.get(`/api/search${query}`);
 }
 
 export async function updateAuctionTest() {

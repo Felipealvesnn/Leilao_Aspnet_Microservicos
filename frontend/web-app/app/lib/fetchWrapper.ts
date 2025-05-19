@@ -4,7 +4,8 @@
 
 const baseUrl = process.env.SEARCH_URL_INTERNAL;
 
-export async function get(url: string) {
+ async function get(url: string) {
+    debugger;
     const requestOptions = {
         method: 'GET',
         headers: await getHeaders()
@@ -46,3 +47,7 @@ async function handleResponse(response: Response) {
         return {error}
     }
 }
+
+export const fetchWrapper = {
+    get,
+};
