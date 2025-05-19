@@ -1,9 +1,16 @@
-import React from "react";
 
-type props = {
-  id: string;
-};
+import React from 'react'
+import AuctionForm from '../../AuctionForm';
+import Heading from '@/app/components/Heading';
+import { getDetailedViewData } from '@/app/actions/auctionsActions';
 
-export default function Update(params: props) {
-  return <div>page for {params.id}</div>;
+export default async function Update({params}: {params: {id: string}}) {
+  const data = await getDetailedViewData(params.id);
+
+  return (
+    <div className='mx-auto max-w-[75%] shadow-lg p-10 bg-white rounded-lg'>
+      <Heading title='Update your auction' subtitle='Please update the details of your car' />
+      <AuctionForm auction={data} />
+    </div>
+  )
 }

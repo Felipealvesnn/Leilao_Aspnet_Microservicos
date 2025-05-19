@@ -1,11 +1,14 @@
 "use client";
 import { useParamsStore } from "@/hooks/useParamsStore";
+import { usePathname, useRouter } from "next/navigation";
 import React from "react";
 import { FaSearch } from "react-icons/fa";
 import { useShallow } from "zustand/shallow";
 // import { Button } from "flowbite-react";
 
 export default function Search() {
+   const router = useRouter();
+    const pathname = usePathname();
   const params = useParamsStore(
     useShallow((state) => ({
       searchTerm: state.searchTerm,
@@ -18,6 +21,10 @@ export default function Search() {
       setSearchValue: state.setSearchValue,
     }))
   );
+     function search() {
+        if (pathname !== '/') router.push('/');
+        params.setParams({searchTerm: params.searchTerm});
+    }
 
   return (
     <div
@@ -27,9 +34,7 @@ export default function Search() {
     >
       <input
         onKeyDown={(e) => {
-          if (e.key === "Enter") {
-            params.setParams({ searchTerm: searchTermc.searchValue });
-          }
+              if (e.key === 'Enter') search();
         }}
         value={searchTermc.searchValue}
         onChange={(e) => searchTermc.setSearchValue(e.target.value)}
@@ -44,9 +49,7 @@ export default function Search() {
         placeholder="Search"
       ></input>
       <button
-        onClick={() =>
-          params.setParams({ searchTerm: searchTermc.searchValue })
-        }
+         onClick={search} 
       >
         <FaSearch
           size={34}
