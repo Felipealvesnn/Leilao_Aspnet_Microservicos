@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 import { Button } from "flowbite-react";
@@ -7,6 +8,8 @@ import DateInput from "../components/DateInput";
 import Input from "../components/Input";
 import { usePathname, useRouter } from "next/navigation";
 import { Auction } from "../types/auction";
+import { createAuction, updateAuction } from "../actions/auctionsActions";
+import toast from "react-hot-toast";
 
 type Props = {
   auction?: Auction;
@@ -34,25 +37,25 @@ export default function AuctionForm({ auction }: Props) {
   }, [setFocus, auction, reset]);
 
   async function onSubmit(data: FieldValues) {
-    // try {
-    //   let id = "";
-    //   let res;
-    //   if (pathname === "/auctions/create") {
-    //     res = await createAuction(data);
-    //     id = res.id;
-    //   } else {
-    //     if (auction) {
-    //       res = await updateAuction(data, auction.id);
-    //       id = auction.id;
-    //     }
-    //   }
-    //   if (res.error) {
-    //     throw res.error;
-    //   }
-    //   router.push(`/auctions/details/${id}`);
-    // } catch (error: any) {
-    //   toast.error(error.status + " " + error.message);
-    // }
+    try {
+      let id = "";
+      let res;
+      if (pathname === "/auctions/create") {
+        res = await createAuction(data);
+        id = res.id;
+      } else {
+        if (auction) {
+          res = await updateAuction(data, auction.id);
+          id = auction.id;
+        }
+      }
+      if (res.error) {
+        throw res.error;
+      }
+      router.push(`/auctions/details/${id}`);
+    } catch (error: any) {
+      toast.error(error.status + " " + error.message);
+    }
   }
 
   return (
